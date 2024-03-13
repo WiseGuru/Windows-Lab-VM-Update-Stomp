@@ -19,12 +19,22 @@ Add-Content -Path C:\KillUpdates.ps1 -Value "Set-Service -Name UsoSvc -StartupTy
 
 # Set Task Variables
 $Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-ExecutionPolicy Bypass -File C:\KillUpdates.ps1"
-$Trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Hours 1)
 $Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -DontStopOnIdleEnd -ExecutionTimeLimit (New-TimeSpan -Minutes 15)
 $Principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount -RunLevel Highest
+# Define the Trigger array
+# An array is used so we can insert multiple triggers
+# Multiple triggers are required because Windows is very persistent
+$Trigger = @(
+	$(New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Minutes 30))
+	$(New-ScheduledTaskTrigger -AtStartup)
+	$(New-ScheduledTaskTrigger -AtLogon)
+)
 
 # Create Task
 Register-ScheduledTask -TaskName "KillUpdateServices" -Action $Action -Trigger $Trigger -Settings $Settings -Principal $Principal
+
+# Run scheduled task once for fun and games 
+Start-ScheduledTask -TaskName "KillUpdateServices"
 
 ## Disable Antimalware Realtime Monitoring (required by the Windows CLI Lab)
 # This should generate an error and means realtime monitoring is already disabled.
