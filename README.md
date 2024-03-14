@@ -5,6 +5,13 @@ As a bonus are various cosmetic changes (hiding the Search bar, disables News an
 ### Why?
 Windows Updates are incredibly persistent; somehow they're never installed on my users' computers, but they force-run on BHIS's SOC Core Lab VM...
 
+#### BHIS Lab
+Here are links to the BHIS Lab VM setup and various labs you would use it with:
+
+[John Strand Training Lab – Download Instructions](https://www.antisyphontraining.com/john-strand-training-lab-download-instructions/)
+
+[BHIS IntroLabs - Navigation](https://github.com/strandjs/IntroLabs/blob/master/IntroClassFiles/navigation.md)
+
 ### Details
 The script should be thoroughly commented and clearly written, but let me know if I need to clarify something.
 
