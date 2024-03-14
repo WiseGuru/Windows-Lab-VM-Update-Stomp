@@ -1,10 +1,10 @@
 ## Disable Windows Updates and services that might restart Windows Update
-Stop-Service -Name wuauserv -Force
-Set-Service -Name wuauserv -StartupType Disabled
-Stop-Service -Name bits -Force
-Set-Service -Name bits -StartupType Disabled
 Stop-Service -Name UsoSvc -Force
 Set-Service -Name UsoSvc -StartupType Disabled
+Stop-Service -Name bits -Force
+Set-Service -Name bits -StartupType Disabled
+Stop-Service -Name wuauserv -Force
+Set-Service -Name wuauserv -StartupType Disabled
 
 ## Disable Sign-in and Lock After Updates
 Write-Host "Disable Sign-in and Lock After Updates"
@@ -12,15 +12,19 @@ Set-ItemProperty -path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies
 
 
 ## Create PowerShell Script to Disable Updates Across Reboots
-# Stop/Disable WUAU Service
-Add-Content -Path C:\KillUpdates.ps1 -Value "Stop-Service -Name wuauserv -Force"
+# Disable Services
 Add-Content -Path C:\KillUpdates.ps1 -Value "Set-Service -Name wuauserv -StartupType Disabled"
-# Stop/Disable BITS
-Add-Content -Path C:\KillUpdates.ps1 -Value "Stop-Service -Name bits -Force"
 Add-Content -Path C:\KillUpdates.ps1 -Value "Set-Service -Name bits -StartupType Disabled"
-# Stop/Disable Update Orchestrator Service
-Add-Content -Path C:\KillUpdates.ps1 -Value "Stop-Service -Name UsoSvc -Force"
 Add-Content -Path C:\KillUpdates.ps1 -Value "Set-Service -Name UsoSvc -StartupType Disabled"
+# Wait 30 seconds
+Add-Content -Path C:\KillUpdates.ps1 -Value "Start-Sleep -Seconds 30"
+# Stop Services
+# Update Orchestrator Service
+Add-Content -Path C:\KillUpdates.ps1 -Value "Stop-Service -Name UsoSvc -Force"
+# Background Intelligent Transfer Service
+Add-Content -Path C:\KillUpdates.ps1 -Value "Stop-Service -Name bits -Force"
+# Windows Update Service
+Add-Content -Path C:\KillUpdates.ps1 -Value "Stop-Service -Name wuauserv -Force"
 
 # Set Task Variables
 $Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-ExecutionPolicy Bypass -File C:\KillUpdates.ps1"
@@ -37,9 +41,9 @@ $Trigger = @(
 
 # Create Task
 Register-ScheduledTask -TaskName "KillUpdateServices" -Action $Action -Trigger $Trigger -Settings $Settings -Principal $Principal
-
 # Run scheduled task once for fun and games 
 Start-ScheduledTask -TaskName "KillUpdateServices"
+
 
 ## Disable Antimalware Realtime Monitoring (required by the Windows CLI Lab)
 # This should generate an error and means realtime monitoring is already disabled.
@@ -65,6 +69,7 @@ Set-ItemProperty -path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 # Restart Explorer
 Write-Host "Restarting Explorer"
 Start-Process explorer.exe
+
 
 ## You're all set
 Write-Host "Congratulations! You should be all set with a clean desktop and fine experience for labbing. Hack it!"
