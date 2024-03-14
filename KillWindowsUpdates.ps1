@@ -6,6 +6,11 @@ Set-Service -Name bits -StartupType Disabled
 Stop-Service -Name UsoSvc -Force
 Set-Service -Name UsoSvc -StartupType Disabled
 
+## Disable Sign-in and Lock After Updates
+Write-Host "Disable Sign-in and Lock After Updates"
+Set-ItemProperty -path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "DisableAutomaticRestartSignOn" -Type DWord -Value 1
+
+
 ## Create PowerShell Script to Disable Updates Across Reboots
 # Stop/Disable WUAU Service
 Add-Content -Path C:\KillUpdates.ps1 -Value "Stop-Service -Name wuauserv -Force"
