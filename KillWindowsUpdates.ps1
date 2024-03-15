@@ -1,10 +1,20 @@
 ## Disable Windows Updates and services that might restart Windows Update
+# Update Orchestrator Service
 Stop-Service -Name UsoSvc -Force
 Set-Service -Name UsoSvc -StartupType Disabled
+# Background Intelligent Transfer Service
 Stop-Service -Name bits -Force
 Set-Service -Name bits -StartupType Disabled
+# Windows Update Service
 Stop-Service -Name wuauserv -Force
 Set-Service -Name wuauserv -StartupType Disabled
+# Microsoft Store Install Service
+Stop-Service -Name InstallService -Force
+Set-Service -Name InstallService -StartupType Disabled
+# Prevent Microsoft Store from autodownloading updates
+New-Item -path "HKLM:\Software\Policies\Microsoft" -Name "WindowsStore"
+Set-ItemProperty -path "HKLM:\Software\Policies\Microsoft\WindowsStore" -Name "AutoDownload" -Type DWord -Value 2
+
 
 ## Disable Sign-in and Lock After Updates
 Write-Host "Disable Sign-in and Lock After Updates"
@@ -16,6 +26,7 @@ Set-ItemProperty -path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies
 Add-Content -Path C:\KillUpdates.ps1 -Value "Set-Service -Name wuauserv -StartupType Disabled"
 Add-Content -Path C:\KillUpdates.ps1 -Value "Set-Service -Name bits -StartupType Disabled"
 Add-Content -Path C:\KillUpdates.ps1 -Value "Set-Service -Name UsoSvc -StartupType Disabled"
+Add-Content -Path C:\KillUpdates.ps1 -Value "Set-Service -Name InstallService -StartupType Disabled"
 # Wait 30 seconds
 Add-Content -Path C:\KillUpdates.ps1 -Value "Start-Sleep -Seconds 30"
 # Stop Services
@@ -25,6 +36,8 @@ Add-Content -Path C:\KillUpdates.ps1 -Value "Stop-Service -Name UsoSvc -Force"
 Add-Content -Path C:\KillUpdates.ps1 -Value "Stop-Service -Name bits -Force"
 # Windows Update Service
 Add-Content -Path C:\KillUpdates.ps1 -Value "Stop-Service -Name wuauserv -Force"
+# Microsoft Store Install Service
+Add-Content -Path C:\KillUpdates.ps1 -Value "Stop-Service -Name InstallService -Force"
 
 # Set Task Variables
 $Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-ExecutionPolicy Bypass -File C:\KillUpdates.ps1"
