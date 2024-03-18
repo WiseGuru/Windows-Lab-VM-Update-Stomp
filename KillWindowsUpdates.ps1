@@ -86,3 +86,5 @@ Start-Process explorer.exe
 
 ## You're all set
 Write-Host "Congratulations! You should be all set with a clean desktop and fine experience for labbing. Hack it!"
+
+
