@@ -9,5 +9,4 @@ wget https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-
 wget https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win-guest-tools.exe -outfile .\virtio-win-guest-tools.exe ; read-host "Press enter to begin installing the VirtIO Drivers..." ; .\virtio-win-guest-tools.exe
 
 ## Reboot in 30 seconds
-shutdown /r /t 30
-read-host "Type 'shutdown -a' to abort the reboot.
+read-host "Press enter to restart VM. You can abort the reboot by typing 'shutdown -a' after the reboot has begin." ; shutdown /r /t 30
