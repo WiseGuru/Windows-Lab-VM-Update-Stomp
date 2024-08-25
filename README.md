@@ -2,11 +2,21 @@
 This is an effort to kill Windows Update in a lab environment where updates cause problems with the activities.
 As a bonus are various cosmetic changes (hiding the Search bar, disables News and Weather, etc.) that I like having on Windows machines I use.
 
+## Run the script now
 To run the script *right now*, copy and paste the code below into an elevated (e.g. Admin) PowerShell session.
 `wget https://raw.githubusercontent.com/WiseGuru/Windows-Lab-VM-Update-Stomp/main/KillWindowsUpdates.ps1 -outfile .\KWU.ps1 | .\KWU.ps1`
 
 This downloads the `KillWindowsUpdate.ps1` file, saves it as `KWU.ps1`, and then runs the script.
 
+## Kill updates and install SPICE/VirtIO drivers
+Because you won't by able to copy/paste, I've shortened the URL to `KWU_WGET_Command.ps1`.
+
+Open Edge, and navigate to this URL:
+[https://shorturl.at/0xPiV](https://shorturl.at/0xPiV)
+
+Copy and paste the whole script into an Elevated PowerShell session and follow the prompts.
+
+## Manual Instructions
 You can also do this more manually by running Powershell as an administrator and copy/pasting the code from [KillWindowsUpdates.ps1](https://github.com/WiseGuru/Windows-Lab-VM-Update-Stomp/blob/main/KillWindowsUpdates.ps1) into the terminal.
 
 This script will:
