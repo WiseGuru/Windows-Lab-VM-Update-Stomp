@@ -2,7 +2,13 @@
 This is an effort to kill Windows Update in a lab environment where updates cause problems with the activities.
 As a bonus are various cosmetic changes (hiding the Search bar, disables News and Weather, etc.) that I like having on Windows machines I use.
 
-To run the script, run Powershell as an administrator, and copy/paste the code from [KillWindowsUpdates.ps1](https://github.com/WiseGuru/Windows-Lab-VM-Update-Stomp/blob/main/KillWindowsUpdates.ps1) into the terminal.
+To run the script *right now*, copy and paste the code below into an elevated (e.g. Admin) PowerShell session.
+`wget https://raw.githubusercontent.com/WiseGuru/Windows-Lab-VM-Update-Stomp/main/KillWindowsUpdates.ps1 -outfile .\KWU.ps1 | .\KWU.ps1`
+
+This downloads the `KillWindowsUpdate.ps1` file, saves it as `KWU.ps1`, and then runs the script.
+
+You can also do this more manually by running Powershell as an administrator and copy/pasting the code from [KillWindowsUpdates.ps1](https://github.com/WiseGuru/Windows-Lab-VM-Update-Stomp/blob/main/KillWindowsUpdates.ps1) into the terminal.
+
 This script will:
 1. Kill any active update process
 2. Disable all update services
