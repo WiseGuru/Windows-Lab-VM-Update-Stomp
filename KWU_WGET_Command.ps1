@@ -3,14 +3,11 @@ wget https://raw.githubusercontent.com/WiseGuru/Windows-Lab-VM-Update-Stomp/main
 
 # Additional Linux Commands
 ## Download and run SPICE-Guest tools
-wget https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe -outfile .\SPICE-Guest.exe
-.\SPICE-Guest.exe
+wget https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe -outfile .\SPICE-Guest.exe ; .\SPICE-Guest.exe
 
-## Download VirtIO WinGuest Tools
-wget https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win-guest-tools.exe -outfile .\virtio-win-guest-tools.exe
-start-sleep 30
-## install VirtIO Guest Tools
- .\virtio-win-guest-tools.exe
+## Download and run VirtIO WinGuest Tools
+wget https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win-guest-tools.exe -outfile .\virtio-win-guest-tools.exe ; read-host "Press enter to begin installing the VirtIO Drivers..." ; .\virtio-win-guest-tools.exe
 
 ## Reboot in 30 seconds
 shutdown /r /t 30
+read-host "Type 'shutdown -a' to abort the reboot.
