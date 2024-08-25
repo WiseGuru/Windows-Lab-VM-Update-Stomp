@@ -2,6 +2,13 @@
 This is an effort to kill Windows Update in a lab environment where updates cause problems with the activities.
 As a bonus are various cosmetic changes (hiding the Search bar, disables News and Weather, etc.) that I like having on Windows machines I use.
 
+This script will:
+1. *Kill* any active update process
+2. *Disable* all update services
+3. *Create a task* that kills processes and disables update services to run at login and then every 15 minutes (you are welcome to adjust this lower, but I didn't find it necessary)
+4. *Disable Antimalware Realtime Monitoring* (which is required by at least one lab)
+5. *Clean up the interface* (disable Cortana, hide News and Interests, hide the Search bar because you can just open the start menu and type to search, and show full file extensions.) and *restart Explorer* to make the changes take effect.
+
 ## Run the script now
 To run the script *right now in your VM*, copy and paste the command below into an elevated (e.g. Admin) PowerShell session.
 ```PowerShell
@@ -21,18 +28,11 @@ From within the VM, open Edge, navigate to this URL, and copy and paste the scri
 ## Manual Instructions
 You can also do this more manually by running Powershell as an administrator and copy/pasting the code from [KillWindowsUpdates.ps1](https://github.com/WiseGuru/Windows-Lab-VM-Update-Stomp/blob/main/KillWindowsUpdates.ps1) into the terminal.
 
-This script will:
-1. Kill any active update process
-2. Disable all update services
-3. Create a task that kills processes and disables update services to run at login and then every 15 minutes (you are welcome to adjust this lower, but I didn't find it necessary)
-4. Disable Antimalware Realtime Monitoring (which is required by at least one lab)
-5. Clean up the interface (disable Cortana, hide News and Interests, hide the Search bar because you can just open the start menu and type to search, and show full file extensions.) and restart Explorer to make the changes take effect.
-
-The script should be thoroughly commented and clearly written, but let me know if I need to clarify something.
+The script is thoroughly commented and clearly written to help you learn about PowerShell, but let me know if I should clarify something.
 
 After you've run the script, you can run the following command to get the status of the update services that should be stopped.
 
-```Powershell
+```PowerShell
 Get-Service -Name wuauserv,bits,UsoSvc,InstallService
 ```
 
